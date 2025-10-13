@@ -14,8 +14,14 @@ class JobController extends Controller
     {
         $jobsQuery = JobsBoard::query();
 
-        $jobs = $jobsQuery->when(request('search'),function ($query){
-            $query->where('title','like','%'.request('search').'%')->orWhere('description','like','%'.request('search').'%');
+        $jobs = $jobsQuery->when(request('search'), function ($query) {
+            $query->where(function ($query) {
+                $query->where('title', 'like', '%' . request('search') . '%')->orWhere('description', 'like', '%' . request('search') . '%');
+            });
+        })->when(request('minSalary'), function ($query) {
+            $query->where('salary', '>=', request('minSalary'));
+        })->when(request('maxSalary'), function ($query) {
+            $query->where('salary', '<=', request('maxSalary'));
         })->get();
 
         return view('jobs.index', compact('jobs'));
@@ -40,7 +46,7 @@ class JobController extends Controller
     /**
      * Display the specified resource.
      */
-    public function show( JobsBoard $job)
+    public function show(JobsBoard $job)
     {
         return view('jobs.show', compact('job'));
     }
