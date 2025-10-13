@@ -8,12 +8,11 @@
         <div class="text-md text-slate-500 mb-2">Company name / {{ $job->location }}</div>
         <div class="text-sm text-slate-500 mb-2 space-x-1">  <x-tag>{{ $job->category }}</x-tag>   <x-tag>{{ $job->experience }}</x-tag></div>
 </div>
-
-
-<p class="text-slate-500 mb-6 mt-2">{!!  nl2br($job->description) !!}</p>
+<div class="mb-4">
+    {{ $slot }}
+</div>
 <p class="text-gray-500 text-xs space-x-2">
-    <x-tag>Posted on: {{ $job->created_at->format('M d, Y') }}</x-tag>
+   Posted on: {{ $job->created_at->format('M d, Y') }}
 </p>
-{{ $slot }}
 
 </x-job-card-component>

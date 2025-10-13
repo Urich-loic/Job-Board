@@ -18,5 +18,7 @@
             </li>
         </ul>
     </nav>
-    <x-card-body :$job />
+    <x-card-body :$job >
+        <p class="text-slate-500 mb-6 mt-2">{!!  nl2br($job->description) !!}</p>
+    </x-card-body>
 </x-layout>

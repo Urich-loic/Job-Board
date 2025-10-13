@@ -12,7 +12,12 @@ class JobController extends Controller
      */
     public function index()
     {
-        $jobs = JobsBoard::all();
+        $jobsQuery = JobsBoard::query();
+
+        $jobs = $jobsQuery->when(request('search'),function ($query){
+            $query->where('title','like','%'.request('search').'%')->orWhere('description','like','%'.request('search').'%');
+        })->get();
+
         return view('jobs.index', compact('jobs'));
     }
 
