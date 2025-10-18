@@ -1,28 +1,43 @@
 <x-layout>
-     <x-job-card-component class="mb-4">
-        <form action="{{ route('jobs.index') }}" method="GET">
+     <x-cardcomponent class="mb-4">
+        <form x-data="" x-ref="filters" action="{{ route('jobs.index') }}" method="GET">
             <div class="grid grid-cols-2 gap-4">
                 <div>
                     <div class="mb-2font-semibold">
                         Search
                     </div>
-                    <x-text-input name="search" placeholder="Search..." value="{{request('search')}}" />
+                    <x-text-input form-ref="filters"  name="search" placeholder="Search..." value="{{request('search')}}" />
                 </div>
                 <div>
                     <div class="mb-2font-semibold">
                         Salary
                     </div>
                    <div class="flex gap-2">
-                     <x-text-input name="minSalary" placeholder="From..." value="{{request('minSalary')}}" />
-                     <x-text-input name="maxSalary" placeholder="To..." value="{{request('maxSalary')}}" />
+                     <x-text-input form-ref="filters" name="minSalary" placeholder="From..." value="{{request('minSalary')}}" />
+                     <x-text-input form-ref="filters" name="maxSalary" placeholder="To..." value="{{request('maxSalary')}}" />
                    </div>
                 </div>
-                <div>3</div>
-                <div>4</div>
+                <div>
+                    <div class="mb-2font-semibold">
+                        Experience
+                    </div>
+                    <div class="">
+                    <x-radio-group name="experience" :options=" App\Models\JobsBoard::$experienceLevels "/>
+                    </div>
+
+                </div>
+                <div>
+                    <div class="mb-2font-semibold">
+                        Category
+                    </div>
+                    <div class="">
+                    <x-select-group name="category" :options="array_combine(array_map('ucfirst',App\Models\JobsBoard::$category),App\Models\JobsBoard::$category,)"/>
+                    </div>
+                </div>
             </div>
-            <button type="submit" class="w-full px-2.5 py-1.5 bg-slate-800 text-white rounded-lg mt-2">Filter</button>
+           <x-formbutton class="w-full ">Filter</x-formbutton>
             </form>
-        </x-job-card-component>
+        </x-cardcomponent>
     @foreach ($jobs as $job)
 
         <x-card-body :$job>
@@ -33,4 +48,5 @@
            </div>
         </x-card-body>
     @endforeach
+    {{ $jobs->links() }}
 </x-layout>

@@ -33,6 +33,16 @@ class User extends Authenticatable
         'remember_token',
     ];
 
+    public function employer()
+    {
+        return $this->hasOne(Employer::class);
+    }
+
+    public function JobApplications()
+    {
+        return $this->hasMany(JobApplication::class);
+    }
+
     /**
      * Get the attributes that should be cast.
      *

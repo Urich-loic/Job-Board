@@ -19,11 +19,28 @@
             </style>
         @endif
     </head>
-    <body class="bg-[#FDFDFC] dark:bg-slate-200 text-[#1b1b18] flex p-6 lg:p-8 items-center min-h-screen flex-col">
-        {{ $slot }}
+    <body class=" text-[#1b1b18] flex p-6 lg:p-8 items-center min-h-screen flex-col bg-gradient-to-r from-indigo-200 from-10% via-sky-200 via-30% to-emerald-200 to-90% ">
 
-        @if (Route::has('login'))
-            <div class="h-14.5 hidden lg:block"></div>
-        @endif
+
+    <nav class="flex justify-between w-2xl mx-auto mb-8">
+        <ul class="flex space-x-1">
+            <li><a href="{{ route('jobs.index') }}">Home</a></li>
+        </ul>
+         <ul class="flex justify-between space-x-3">
+            @auth
+            <li>Welcome {{auth()->user()->name}}</li>
+            <li>
+                <form action="{{ route('auth.destroy') }}" method="post">
+                    @csrf
+                    @method('delete')
+                    <button type="submit" class="hover:cursor-pointer">Logout</button>
+                </form>
+            </li>
+            @else
+             <li><a href="{{ route('auth.create') }}">Login</a></li>
+            @endauth
+        </ul>
+    </nav>
+        {{ $slot }}
     </body>
 </html>
