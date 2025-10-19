@@ -3,7 +3,8 @@
 namespace App\Models;
 
 use GuzzleHttp\Psr7\Query;
-use Illuminate\Contracts\Database\Eloquent\Builder;
+use Illuminate\Contracts\Auth\Authenticatable;
+use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Contracts\Database\Query\Builder as QueryBuilder;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
@@ -25,6 +26,12 @@ class JobsBoard extends Model
     public function jobApplications()
     {
         return $this->hasMany(JobApplication::class);
+    }
+
+    public function hasApplied(Authenticatable|User|int $user){
+        return $this->where('id',$this->id)->whereHas('jobApplications', function (Builder $query) use ($user) {
+            $query->where('user_id', '=',   $user->id ?? $user);
+        })->exists();
     }
 
 
@@ -52,15 +59,14 @@ class JobsBoard extends Model
         'Arts'
     ];
 
-    public function scopeFilter(Builder | QueryBuilder $query, array $filters): Builder | QueryBuilder
+    public function scopeFilter(\Illuminate\Database\Eloquent\Builder|QueryBuilder $query, array $filters)
     {
-        return $query->when($filters['search'] ?? null, function ($query, $search) {
-            $query->where(function ($query) use ($search) {
-                $query->where($search, 'like', '%' . request('search') . '%')
+        return $query->when($filters['search'] ?? null, function ( $query, $search) {
+            $query->where('title', 'like', '%' . $search . '%')
                     ->orWhere('description', 'like', '%' . $search . '%')
-                    ->orWhereHas('company_name', function ($query) use ($search) {
+                    ->orWhereHas('company_name', function (\Illuminate\Database\Eloquent\Builder $query) use ($search) {
                         $query->where('company_name', 'like', '%' . $search . '%');
-                    });
+
             });
         })->when($filters['minSalary'] ?? null, function ($query, $minSalary) {
             $query->where('salary', '>=', $minSalary);

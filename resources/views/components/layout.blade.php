@@ -19,7 +19,7 @@
             </style>
         @endif
     </head>
-    <body class=" text-[#1b1b18] flex p-6 lg:p-8 items-center min-h-screen flex-col bg-gradient-to-r from-indigo-200 from-10% via-sky-200 via-30% to-emerald-200 to-90% ">
+    <body class=" text-[#1b1b18] flex p-6 lg:p-8 items-center min-h-screen flex-col bg-gradient-to-r from-indigo-200 from-10% via-sky-200 via-30% to-emerald-100 to-90% ">
 
 
     <nav class="flex justify-between w-2xl mx-auto mb-8">
@@ -28,7 +28,11 @@
         </ul>
          <ul class="flex justify-between space-x-3">
             @auth
-            <li>Welcome {{auth()->user()->name}}</li>
+            <li>
+                <a href="{{route('my-job-applications.index')}}">
+                    {{auth()->user()->name}} : Applications
+                </a>
+            </li>
             <li>
                 <form action="{{ route('auth.destroy') }}" method="post">
                     @csrf
@@ -41,6 +45,12 @@
             @endauth
         </ul>
     </nav>
+   @if (session('success'))
+    <div class="block w-2xl mb-8 bg-green-300 text-green-700 border-l-4 border-green-800 rounded-md p-4">
+        <p class="font-bold">Success</p>
+        <p class="font-medium">{{ session('success') }}</p>
+    </div>
+   @endif
         {{ $slot }}
     </body>
 </html>

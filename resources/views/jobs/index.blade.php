@@ -6,15 +6,15 @@
                     <div class="mb-2font-semibold">
                         Search
                     </div>
-                    <x-text-input form-ref="filters"  name="search" placeholder="Search..." value="{{request('search')}}" />
+                    <x-text-input form-ref="filters"  name="search" placeholder="Search..." value="{{request('search')}}" class="pr-6"/>
                 </div>
                 <div>
                     <div class="mb-2font-semibold">
                         Salary
                     </div>
                    <div class="flex gap-2">
-                     <x-text-input form-ref="filters" name="minSalary" placeholder="From..." value="{{request('minSalary')}}" />
-                     <x-text-input form-ref="filters" name="maxSalary" placeholder="To..." value="{{request('maxSalary')}}" />
+                     <x-text-input form-ref="filters" name="minSalary" placeholder="From..." value="{{request('minSalary')}}"class="pr-6" />
+                     <x-text-input form-ref="filters" name="maxSalary" placeholder="To..." value="{{request('maxSalary')}}" class="pr-6"/>
                    </div>
                 </div>
                 <div>

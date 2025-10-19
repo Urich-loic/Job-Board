@@ -15,7 +15,7 @@
         <x-text-input type="number" name="expected_salary" />
       </div>
 
-      <x-button class="w-full">Apply</x-button>
+      <button type="submit" class="w-full block bg-slate-500 rounded-md py-2 hover:cursor-pointer text-white">Apply</button>
     </form>
   </x-cardcomponent>
 

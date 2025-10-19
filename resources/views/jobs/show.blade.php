@@ -20,13 +20,15 @@
     </nav>
     <x-card-body :$job >
         <p class="text-slate-500 mb-6 mt-2">{!!  nl2br($job->description) !!}</p>
-        @auth
+
+        @can('apply', $job)
         <x-button :href="route('jobs.application.create',$job)">Apply now</x-button>
         @else
         <div class="text-amber-800">
-            <x-button :href="route('auth.create')">Login to apply</x-button>
+            You have applied already!
         </div>
-        @endauth
+        @endcan
+
     </x-card-body>
     <x-cardcomponent class="mt-3" :job="$job">
          <h2 class="text-xl font-bold">More  {{ $job->employer->company_name }} jobs</h2>
