@@ -14,7 +14,10 @@ class MyJobApplicationController extends Controller
 
     public function index()
     {
-        $applications = Auth::user()->jobApplications()->with('jobsBoard')->latest()->paginate(10);
+        /** @var \App\Models\User $user */
+
+        $user = Auth::user();
+        $applications = $user->jobApplications()->with('jobsBoard', 'jobsBoard.employer')->latest()->paginate(10);
         return view('MyJobApplications.index', compact('applications'));
     }
 

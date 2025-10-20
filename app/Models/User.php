@@ -40,7 +40,7 @@ class User extends Authenticatable
 
     public function jobApplications()
     {
-        return $this->hasMany(JobApplication::class);
+        return $this->hasMany(\App\Models\JobApplication::class);
     }
 
     /**

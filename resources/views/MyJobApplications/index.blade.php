@@ -1,12 +1,28 @@
 <x-layout>
-    <x-cardcomponent class="mb-4">
+
         <h2 class="text-xl font-bold mb-3">My Job Applications</h2>
         @foreach ($applications as $application)
-            <x-card-body :job="$application->jobBoard">
+             <x-cardcomponent class="mb-4" :job="$application->jobBoard">
                 <div class="mt-5">
-                    <span class="font-semibold">Applied on:</span> {{ $application->created_at->format('F j, Y') }}
+                    <h3 class="text-xl font-bold mb-4">{{ $application->jobsBoard->title }}</h3>
+
+                    <div class="flex justify-between">
+                    <span class="mb-6 font-medium">{{ $application->jobsBoard->employer->company_name }} Fcfa</span>
+                    <span>{{ number_format($application->expected_salary) }} Fcfa</span>
+                    </div>
+                   <div class="flex justify-between">
+                    <div class="col-1">
+                         <span>Applied on: {{ $application->created_at->diffForHumans() }}</span>
+                    </div>
+                    <div class="col-1">
+                         <x-tag>{{ $application->jobsBoard->experience }}</x-tag>
+                    </div>
+                   </div>
                 </div>
-            </x-card-body>
+            </x-cardcomponent>
         @endforeach
+
         {{ $applications->links() }}
+
+
 </x-layout>

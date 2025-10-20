@@ -12,11 +12,11 @@ class JobApplication extends Model
 
     protected $guarded=[];
 
-    public function jobBoard(){
+    public function jobsBoard(){
         return $this->belongsTo(JobsBoard::class);
     }
 
      public function user(){
-        return $this->belongsTo(User::class);
+        return $this->belongsTo(\App\Models\User::class);
     }
 }
